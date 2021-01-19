@@ -36,4 +36,11 @@ RUN chown -R ${NB_UID} /usr/local/julia
 USER ${NB_USER}
 ENV PATH=${HOME}/.julia/conda/3/bin:${PATH}
 
+WORKDIR ${HOME}
+
+USER root
+RUN chown -R ${NB_UID} ${HOME}
+USER ${NB_USER}
+
+
 EXPOSE 8888
