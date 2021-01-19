@@ -24,13 +24,13 @@ RUN julia -e '\
 using Pkg; \
 Pkg.add(["Plots", "PackageCompiler"]); \
 Pkg.add(["PyCall", "IJulia", "Conda"]); \
-using Conda; Conda.add("jupyter"); \
+using Conda; Conda.add(["jupyter", "jupyterlab"]); \
 Pkg.precompile(); \
 '
 
 USER root
 
-RUN julia -e 'using PackageCompiler; create_sysimage([:Plots,], replace_default=true)'
+RUN julia -e 'using PackageCompiler; create_sysimage([:Plots, :IJulia], replace_default=true)'
 RUN chown -R ${NB_UID} /usr/local/julia
 
 USER ${NB_USER}
